@@ -1,18 +1,18 @@
-<?php
-$name       = @trim(stripslashes($_POST['name'])); 
-$from       = @trim(stripslashes($_POST['email'])); 
-$subject    = @trim(stripslashes($_POST['subject'])); 
-$message    = @trim(stripslashes($_POST['message'])); 
-$to   		= 'ilian6806@gmail.com';
+<?php 
 
-$headers   = array();
-$headers[] = "MIME-Version: 1.0";
-$headers[] = "Content-type: text/plain; charset=iso-8859-1";
-$headers[] = "From: {$name} <{$from}>";
-$headers[] = "Reply-To: <{$from}>";
-$headers[] = "Subject: {$subject}";
-$headers[] = "X-Mailer: PHP/".phpversion();
+$name = trim(htmlspecialchars($_POST['name'])); 
+$from = trim(htmlspecialchars($_POST['email'])); 
+$subject = trim(htmlspecialchars($_POST['subject'])); 
+$message = trim(htmlspecialchars($_POST['message'])); 
+$to = 'ilian6806@abv.bg'; 
 
-mail($to, $subject, $message, $headers);
+$headers = array(); 
+$headers[] = "MIME-Version: 1.0"; 
+$headers[] = "Content-type: text/plain; charset=utf-8";
+$headers[] = "From: {$name} <{$from}>"; 
+$headers[] = "Reply-To: <{$from}>"; 
+$headers[] = 'X-Mailer: PHP/'.phpversion(); 
 
-die;
+mail($to, $subject, $message, implode("\r\n", $headers)); 
+
+?>

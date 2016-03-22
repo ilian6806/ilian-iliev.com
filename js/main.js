@@ -1,5 +1,8 @@
 jQuery(function($) {
 
+	var $body = $('html, body');
+	var $mainNav = $('.main-nav');
+
 	//Preloader
 	var preloader = $('.preloader');
 	$(window).load(function(){
@@ -8,18 +11,18 @@ jQuery(function($) {
 
 	//#main-slider
 	var slideHeight = $(window).height();
-	$('#home-slider .item').css('height',slideHeight);
+	$('#home-slider .item').css('height', slideHeight);
 
 	$(window).resize(function(){'use strict',
-		$('#home-slider .item').css('height',slideHeight);
+		$('#home-slider .item').css('height', slideHeight);
 	});
 	
 	//Scroll Menu
 	$(window).on('scroll', function(){
 		if( $(window).scrollTop()>slideHeight ){
-			$('.main-nav').addClass('navbar-fixed-top');
+			$mainNav.addClass('navbar-fixed-top');
 		} else {
-			$('.main-nav').removeClass('navbar-fixed-top');
+			$mainNav.removeClass('navbar-fixed-top');
 		}
 	});
 	
@@ -29,7 +32,7 @@ jQuery(function($) {
 	});
 
 	$('.navbar-collapse ul li a').on('click', function() {  
-		$('html, body').animate({scrollTop: $(this.hash).offset().top - 5}, 1000);
+		$body.animate({scrollTop: $(this.hash).offset().top - 5}, 1000);
 		return false;
 	});
 
@@ -40,10 +43,10 @@ jQuery(function($) {
 		var winTop      =   $(window).scrollTop();
 		var rangeTop    =   200;
 		var rangeBottom =   500;
-		$('.navbar-collapse').find('.scroll a').each(function(){
+		$('.navbar-collapse').find('.scroll a').each(function() {
 			contentTop.push( $( $(this).attr('href') ).offset().top);
 			contentBottom.push( $( $(this).attr('href') ).offset().top + $( $(this).attr('href') ).height() );
-		})
+		});
 		$.each( contentTop, function(i){
 			if ( winTop > contentTop[i] - rangeTop ){
 				$('.navbar-collapse li.scroll')
@@ -54,7 +57,7 @@ jQuery(function($) {
 	};
 
 	$('#tohash').on('click', function(){
-		$('html, body').animate({scrollTop: $(this.hash).offset().top - 5}, 1000);
+		$body.animate({scrollTop: $(this.hash).offset().top - 5}, 1000);
 		return false;
 	});
 	
@@ -66,7 +69,7 @@ jQuery(function($) {
 	// Progress Bar
 	$('#about').bind('inview', function(event, visible, visiblePartX, visiblePartY) {
 		if (visible) {
-			$.each($('div.progress-bar'),function(){
+			$.each($('div.progress-bar'), function() {
 				$(this).css('width', $(this).attr('aria-valuetransitiongoal')+'%');
 			});
 			$(this).unbind('inview');
@@ -99,7 +102,7 @@ jQuery(function($) {
 		trgt = parts[1],
 		target_top = $("#"+trgt).offset().top;
 
-		$('html, body').animate({scrollTop:target_top}, 600);
+		$body.animate({scrollTop:target_top}, 600);
 		$('#portfolio-single').slideUp(500, function(){
 			$(this).load(link,function(){
 				$(this).slideDown(500);
@@ -115,28 +118,34 @@ jQuery(function($) {
 		trgt = parts[1],
 		target_offset = $("#"+trgt).offset(),
 		target_top = target_offset.top;
-		$('html, body').animate({scrollTop:target_top}, 600);
+		$body.animate({scrollTop:target_top}, 600);
 		$("#portfolio-single").slideUp(500);
 	});
 
 	// Contact form
-	var form = $('#main-contact-form');
-	form.submit(function(event){
+	var $form = $('#main-contact-form');
+	$form.submit(function(event) {
 		event.preventDefault();
-		var form_status = $('<div class="form_status"></div>');
+		var $form_status = $('<div class="form_status"></div>');
 		$.ajax({
-			url: $(this).attr('action'),
-			beforeSend: function(){
-				form.prepend( form_status.html('<p><i class="fa fa-spinner fa-spin"></i> Email is sending...</p>').fadeIn() );
+			type: 'POST',
+			url: $form.attr('action'),
+			data: $form.serialize(),
+			beforeSend: function() {
+				$form.prepend( $form_status.html('<p><i class="fa fa-spinner fa-spin"></i> Email is sending...</p>').fadeIn() );
 			}
 		}).done(function(data){
-			form_status.html('<p class="text-success">Thank you for contact us. As early as possible  we will contact you</p>').delay(3000).fadeOut();
+			$form_status.html('<p class="text-success">I will contact you as soon as possible !</p>').delay(4000).fadeOut(400, function () {
+				$(this).remove();
+			});
 		});
 	});
 
 	//Google Map
-	var latitude = $('#google-map').data('latitude')
-	var longitude = $('#google-map').data('longitude')
+	var $map = $('#google-map');
+	var latitude = $map.data('latitude');
+	var longitude = $map.data('longitude');
+
 	function initialize_map() {
 		var myLatlng = new google.maps.LatLng(latitude,longitude);
 		var mapOptions = {
@@ -144,7 +153,7 @@ jQuery(function($) {
 			scrollwheel: false,
 			center: myLatlng
 		};
-		var map = new google.maps.Map(document.getElementById('google-map'), mapOptions);
+		var map = new google.maps.Map($map[0], mapOptions);
 		var contentString = '';
 		var infowindow = new google.maps.InfoWindow({
 			content: '<div class="map-content"><ul class="address">' + $('.address').html() + '</ul></div>'
@@ -158,6 +167,4 @@ jQuery(function($) {
 		});
 	}
 	google.maps.event.addDomListener(window, 'load', initialize_map);
-	
 });
-
