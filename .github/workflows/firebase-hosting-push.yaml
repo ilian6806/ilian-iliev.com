@@ -1,7 +1,6 @@
 name: Deploy to Live Channel
 
-on:
-  push:
+'on': push
     branches:
       - master
     # Optionally configure to run only for specific files. For example:
