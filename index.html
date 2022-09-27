@@ -371,6 +371,28 @@
             </div>
           </div>
         </div>
+
+        <div class="col-sm-3">
+          <div class="folio-item wow fadeInRightBig" data-wow-duration="1000ms" data-wow-delay="1000ms">
+            <div class="folio-image">
+              <img class="img-responsive" src="images/portfolio/drawit.jpg" alt="">
+            </div>
+            <div class="overlay">
+              <div class="overlay-content">
+                <div class="overlay-text">
+                  <div class="folio-info">
+                    <h3>Draw It Online (socket.io)</h3>
+                  </div>
+                  <div class="folio-overview">
+                    <span class="folio-link"><a href="https://draw-it.herokuapp.com/" target="_blank"><i class="fa fa-link"></i></a></span>
+                    <span class="folio-expand"><a href="images/portfolio/drawit.jpg" data-lightbox="portfolio"><i class="fa fa-search-plus"></i></a></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
   </section><!--/#portfolio-->
@@ -496,5 +518,25 @@
   <script type="text/javascript" src="js/jquery.countTo.js"></script>
   <script type="text/javascript" src="js/lightbox.min.js"></script>
   <script type="text/javascript" src="js/main.js"></script>
+
+  <script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-app.js";
+    // https://firebase.google.com/docs/web/setup#available-libraries
+
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyAy3q7T78LckxD5Fn7-yXsEjTV5hEllWuc",
+      authDomain: "ilian-iliev.firebaseapp.com",
+      databaseURL: "https://ilian-iliev.firebaseio.com",
+      projectId: "ilian-iliev",
+      storageBucket: "ilian-iliev.appspot.com",
+      messagingSenderId: "841418808494",
+      appId: "1:841418808494:web:f7bc8bc9ecc1ef978be13f"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+  </script>
 </body>
 </html>
